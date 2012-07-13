@@ -2,12 +2,19 @@ package com.adviser.shared.model.har;
 
 import java.io.Serializable;
 
-import lombok.Data;
-
-@Data
 public class Har implements Serializable {
-	public void addHar(Har har) {
-		log.addLog(har.getLog());
-	}
-	private Log log = new Log();
+
+  private final Log log = new Log();
+
+  public void addHar(final Har har) {
+    log.addLog(har.getLog());
+  }
+
+  /**
+   * @return the log
+   */
+  public final Log getLog() {
+    return log;
+  }
+
 }
