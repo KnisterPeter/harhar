@@ -14,9 +14,6 @@ import org.springframework.stereotype.Component;
 @Component("Files")
 public class Files extends Base {
 
-  // private static final Logger LOGGER =
-  // LoggerFactory.getLogger(Files.class);
-
   private final static int HTTP_OK = 200;
 
   private final static int HTTP_FILENOTFOUND = 404;
@@ -206,4 +203,5 @@ public class Files extends Base {
   public void page(final Exchange exchange) {
     this.readFile(null, exchange);
   }
+
 }

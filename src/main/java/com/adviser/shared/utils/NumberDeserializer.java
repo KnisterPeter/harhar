@@ -6,15 +6,17 @@ import org.codehaus.jackson.map.JsonDeserializer;
 
 public class NumberDeserializer extends JsonDeserializer<Object> {
 
-  public Object deserialize(JsonParser jp, DeserializationContext ctxt) {
+  @Override
+  public Object deserialize(final JsonParser jp, final DeserializationContext ctxt) {
     try {
       return Long.parseLong(jp.getText());
     } catch (Exception e0) {
       try {
-        return (new Float(jp.getText())).longValue();
+        return new Float(jp.getText()).longValue();
       } catch (Exception e1) {
         return 0;
       }
-    } 
+    }
   }
+
 }

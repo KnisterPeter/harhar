@@ -10,12 +10,15 @@ import org.springframework.stereotype.Component;
 
 @Component("NoKeepAlive")
 public class NoKeepAlive implements HttpClientConfigurer {
-	public void configureHttpClient(HttpClient hc) {
-		((AbstractHttpClient)hc).setReuseStrategy(new ConnectionReuseStrategy() {
-			
-			public boolean keepAlive(HttpResponse arg0, HttpContext arg1) {
-				return false;
-			}
-		});
-	}
+
+  @Override
+  public void configureHttpClient(final HttpClient hc) {
+    ((AbstractHttpClient) hc).setReuseStrategy(new ConnectionReuseStrategy() {
+      @Override
+      public boolean keepAlive(final HttpResponse arg0, final HttpContext arg1) {
+        return false;
+      }
+    });
+  }
+
 }

@@ -9,10 +9,9 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.w3c.dom.Document;
 
-
 public class Base {
-  private static final Logger LOGGER = LoggerFactory
-      .getLogger(Base.class);
+
+  private static final Logger LOGGER = LoggerFactory.getLogger(Base.class);
 
   private String version = null;
 
@@ -26,23 +25,20 @@ public class Base {
       }
       String version = "Adviser-Cockpit(development)";
       try {
-      final InputStream is = Object.class.getClassLoader().getResourceAsStream(
-          "META-INF/maven/com.adviser/loadGenerator/pom.xml");
-      if (is != null) {
-        DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
-        Document doc;
-        try {
-          DocumentBuilder db = dbf.newDocumentBuilder();
-          doc = db.parse(is);
-          version = "Adviser-Cockpit("
-              + doc.getElementsByTagName("version").item(0).getTextContent()
-              + ")";
-        } catch (Exception e) {
-          // System.out.println("IS:"+e.getMessage());
+        final InputStream is = Object.class.getClassLoader().getResourceAsStream("META-INF/maven/com.adviser/loadGenerator/pom.xml");
+        if (is != null) {
+          DocumentBuilderFactory dbf = DocumentBuilderFactory.newInstance();
+          Document doc;
+          try {
+            DocumentBuilder db = dbf.newDocumentBuilder();
+            doc = db.parse(is);
+            version = "Adviser-Cockpit(" + doc.getElementsByTagName("version").item(0).getTextContent() + ")";
+          } catch (Exception e) {
+            // System.out.println("IS:"+e.getMessage());
+          }
         }
-      }
       } catch (Exception e) {
-        LOGGER.error("getServer:VERSION:", e);
+        Base.LOGGER.error("getServer:VERSION:", e);
       }
       this.version = version;
     }
