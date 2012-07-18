@@ -5,13 +5,6 @@
     </encoder>
   </appender>
 
-  <logger name="org.apache" level="INFO" />
-  <logger name="org.springframework" level="INFO" />
-
-<!--
-<logger name="com.adviser.cc" level="DEBUG" />
--->
-
   <root level="INFO">
     <appender-ref ref="STDOUT" />
   </root>

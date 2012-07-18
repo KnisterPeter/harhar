@@ -26,4 +26,8 @@ class PageResult {
   long getSize() {
     entryResults.sum { it.getSize() }
   }
+
+  Map getStatusResults() {
+    entryResults.countBy { it.statusCode }
+  }
 }

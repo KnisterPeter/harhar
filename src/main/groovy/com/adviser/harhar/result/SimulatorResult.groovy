@@ -1,5 +1,7 @@
 package com.adviser.harhar.result
 
+
+
 /**
  * @author marwol
  */
@@ -39,19 +41,21 @@ class SimulatorResult {
     sizes.sum() / sizes.size()
   }
 
+  Map getStatusResults() {
+    def merged = [:]
+    userResults.each {
+      def res = it.statusResults
+      res.each { k, v -> merged.get(k, []).add(v) }
+    }
+    merged.collectEntries { k, v -> [k, v.sum()] }
+  }
+
   void print() {
     println "Simulator:"
     println "  time: ${time} ms"
     println "  requests (total/per s): ${num}/${num / (time / 1000)}"
     println "  user time (min/avg/max): ${minUserTime}/${avgUserTime}/${maxUserTime} ms"
     println "  user size: ${userSize} bytes"
-    //    userResults.each { ur ->
-    //      ur.pageResults.each { pr ->
-    //        println "  Page: ${pr.page.title}"
-    //        println "    Size: ${pr.size}"
-    //        println "    Entries:"
-    //        pr.entryResults.each { er ->   println "      Url: ${er.entry.request.url} => ${er.size} bytes" }
-    //      }
-    //    }
+    println "  status: ${statusResults}"
   }
 }

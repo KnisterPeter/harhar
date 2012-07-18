@@ -35,7 +35,10 @@ class Browser {
   Browser(baseUrl) {
     this.baseUrl = baseUrl
     AsyncHttpClientConfig config = new AsyncHttpClientConfig.Builder()
-        .setMaximumConnectionsPerHost(8)
+        .setAllowPoolingConnection(true)
+        .setMaxRequestRetry(5)
+        .setRequestTimeoutInMs(1000 * 60)
+        .setMaximumConnectionsPerHost(16)
         .setMaximumConnectionsTotal(10000)
         .build();
     client = new AsyncHttpClient(new GrizzlyAsyncHttpProvider(config));

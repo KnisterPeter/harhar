@@ -53,12 +53,13 @@ class EntryRequestor implements Callable<EntryResult> {
 
   BoundRequestBuilder createRequest(AsyncHttpClient client, Entry entry) {
     def url = entry.request.url
-    if (baseUrl) {
+    // TODO: Only for main base url
+    if (false && baseUrl) {
       url = url
           .replaceFirst("http://[^/]+/", baseUrl)
           .replaceFirst("https://[^/]+/", baseUrlSsl)
     }
-    LOGGER.info("Start request: {}", url)
+    LOGGER.debug("Start request: {}", url)
     BoundRequestBuilder request
     switch (entry.request.method.toLowerCase()) {
       case "get":
