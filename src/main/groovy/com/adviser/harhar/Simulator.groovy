@@ -27,13 +27,24 @@ class Simulator {
 
   def baseUrl
 
-  Simulator(int users, int repetitions, def url) {
+  def serial
+
+  Simulator(int users, int repetitions, def url, serial) {
     this.users = users
     this.repetitions = repetitions
     this.baseUrl = url
+    this.serial = serial
   }
 
   void run(Har har) {
+    if (serial) {
+      new SerialExecutor().run(users, repetitions, har)
+    } else {
+      runMultiThreaded(har)
+    }
+  }
+
+  void runMultiThreaded(Har har) {
     ThreadPoolExecutor threadPool = Executors.newFixedThreadPool(users, new BasicThreadFactory.Builder().namingPattern("user-%d").daemon(true).build())
     CountDownLatch cdl = new CountDownLatch(users)
     SimulatorResult result = new SimulatorResult()

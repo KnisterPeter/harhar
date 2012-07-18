@@ -7,7 +7,7 @@ package com.adviser.harhar.result
  */
 class SimulatorResult {
 
-  List<UserResult> userResults
+  List<UserResult> userResults = []
 
   long start = System.currentTimeMillis()
 
@@ -50,10 +50,24 @@ class SimulatorResult {
     merged.collectEntries { k, v -> [k, v.sum()] }
   }
 
+  long getMinRequestTime() {
+    userResults.collect { it.minRequestTime }.min()
+  }
+
+
+  long getAvgRequestTime() {
+    def times = userResults.collect { it.avgRequestTime }
+    times.sum() / times.size()
+  }
+
+  long getMaxRequestTime() {
+    userResults.collect { it.maxRequestTime }.max()
+  }
   void print() {
     println "Simulator:"
     println "  time: ${time} ms"
     println "  requests (total/per s): ${num}/${num / (time / 1000)}"
+    println "  request time (min/avg/max): ${minRequestTime}/${avgRequestTime}/${maxRequestTime} ms"
     println "  user time (min/avg/max): ${minUserTime}/${avgUserTime}/${maxUserTime} ms"
     println "  user size: ${userSize} bytes"
     println "  status: ${statusResults}"

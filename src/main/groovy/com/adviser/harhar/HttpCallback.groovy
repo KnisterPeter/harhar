@@ -30,7 +30,7 @@ class HttpCallback implements AsyncHandler<Response> {
   }
 
   void onThrowable(final Throwable t) {
-    cdl.countDown()
+    cdl?.countDown()
     LOGGER.warn("Request failed", t)
   }
 
@@ -47,12 +47,15 @@ class HttpCallback implements AsyncHandler<Response> {
 
   STATE onBodyPartReceived(HttpResponseBodyPart bodyPart) {
     // TODO Auto-generated method stub
+    def fos = new FileOutputStream("/dev/null")
+    bodyPart.writeTo(fos)
+    fos.close()
     return STATE.CONTINUE
   }
 
   Response onCompleted() {
-    result.setEnd(System.currentTimeMillis())
-    cdl.countDown()
+    result?.end = System.currentTimeMillis()
+    cdl?.countDown()
     responseBuilder.build()
   }
 }

@@ -9,7 +9,7 @@ class PageResult {
 
   Page page
 
-  List<EntryResult> entryResults
+  List<EntryResult> entryResults = []
 
   long start = System.currentTimeMillis()
 
@@ -29,5 +29,18 @@ class PageResult {
 
   Map getStatusResults() {
     entryResults.countBy { it.statusCode }
+  }
+
+  long getMinRequestTime() {
+    entryResults.collect { it.time }.min()
+  }
+
+  long getAvgRequestTime() {
+    def times = entryResults.collect { it.time }
+    times.sum() / times.size()
+  }
+
+  long getMaxRequestTime() {
+    entryResults.collect { it.time }.max()
   }
 }

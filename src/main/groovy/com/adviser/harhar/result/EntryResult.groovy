@@ -32,4 +32,8 @@ class EntryResult {
     this.size = r.getResponseBodyAsBytes().size()
     response = null
   }
+
+  long getTime() {
+    end - start
+  }
 }
