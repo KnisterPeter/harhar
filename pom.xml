@@ -6,77 +6,32 @@
   <version>0.7.0-SNAPSHOT</version>
 
   <properties>
-    <camel.version>2.10.0</camel.version>
   </properties>
   <dependencies>
     <dependency>
-      <groupId>commons-beanutils</groupId>
-      <artifactId>commons-beanutils</artifactId>
-      <version>1.8.3</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.codehaus.groovy</groupId>
+      <artifactId>groovy</artifactId>
+      <version>2.0.0</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-jetty</artifactId>
-      <version>${camel.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>commons-cli</groupId>
+      <artifactId>commons-cli</artifactId>
+      <version>1.2</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-spring</artifactId>
-      <version>${camel.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
+      <groupId>org.codehaus.jackson</groupId>
+      <artifactId>jackson-mapper-asl</artifactId>
+      <version>1.9.7</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-xstream</artifactId>
-      <version>${camel.version}</version>
+      <groupId>com.ning</groupId>
+      <artifactId>async-http-client</artifactId>
+      <version>1.7.4</version>
     </dependency>
     <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-jackson</artifactId>
-      <version>${camel.version}</version>
-    </dependency>
-    <dependency>
-      <groupId>org.apache.camel</groupId>
-      <artifactId>camel-http4</artifactId>
-      <version>${camel.version}</version>
-      <exclusions>
-        <exclusion>
-          <groupId>commons-logging</groupId>
-          <artifactId>commons-logging</artifactId>
-        </exclusion>
-      </exclusions>
-    </dependency>
-    <dependency>
-      <groupId>commons-lang</groupId>
-      <artifactId>commons-lang</artifactId>
-      <version>2.6</version>
-    </dependency>
-    <dependency>
-      <groupId>commons-io</groupId>
-      <artifactId>commons-io</artifactId>
-      <version>2.4</version>
-    </dependency>
-    <dependency>
-      <groupId>org.slf4j</groupId>
-      <artifactId>slf4j-api</artifactId>
-      <version>1.6.6</version>
+      <groupId>org.glassfish.grizzly</groupId>
+      <artifactId>grizzly-http-client</artifactId>
+      <version>1.1</version>
     </dependency>
     <dependency>
       <groupId>org.slf4j</groupId>
@@ -87,8 +42,28 @@
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
       <version>1.0.6</version>
-      <scope>runtime</scope>
     </dependency>
+    <!-- <dependency> -->
+    <!-- <groupId>commons-beanutils</groupId> -->
+    <!-- <artifactId>commons-beanutils</artifactId> -->
+    <!-- <version>1.8.3</version> -->
+    <!-- <exclusions> -->
+    <!-- <exclusion> -->
+    <!-- <groupId>commons-logging</groupId> -->
+    <!-- <artifactId>commons-logging</artifactId> -->
+    <!-- </exclusion> -->
+    <!-- </exclusions> -->
+    <!-- </dependency> -->
+    <!-- <dependency> -->
+    <!-- <groupId>commons-lang</groupId> -->
+    <!-- <artifactId>commons-lang</artifactId> -->
+    <!-- <version>2.6</version> -->
+    <!-- </dependency> -->
+    <!-- <dependency> -->
+    <!-- <groupId>commons-io</groupId> -->
+    <!-- <artifactId>commons-io</artifactId> -->
+    <!-- <version>2.4</version> -->
+    <!-- </dependency> -->
   </dependencies>
 
   <build>
@@ -101,7 +76,15 @@
           <source>1.6</source>
           <target>1.6</target>
           <encoding>UTF-8</encoding>
+          <compilerId>groovy-eclipse-compiler</compilerId>
         </configuration>
+        <dependencies>
+          <dependency>
+            <groupId>org.codehaus.groovy</groupId>
+            <artifactId>groovy-eclipse-compiler</artifactId>
+            <version>2.7.0-01</version>
+          </dependency>
+        </dependencies>
       </plugin>
       <plugin>
         <groupId>org.apache.maven.plugins</groupId>

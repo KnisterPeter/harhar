@@ -1,23 +1,14 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans"
-	xmlns:context="http://www.springframework.org/schema/context"
-	xmlns:util="http://www.springframework.org/schema/util" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xsi:schemaLocation="
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:context="http://www.springframework.org/schema/context" xmlns:util="http://www.springframework.org/schema/util"
+  xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+  xsi:schemaLocation="
       http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
       http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context.xsd
       http://www.springframework.org/schema/util http://www.springframework.org/schema/util/spring-util.xsd
       http://camel.apache.org/schema/spring http://camel.apache.org/schema/spring/camel-spring-2.7.1.xsd
       ">
 
-	<context:component-scan base-package="com.adviser" />
-
-	<camelContext id="camelContext" xmlns="http://camel.apache.org/schema/spring">
-		<contextScan />
-	</camelContext>
-
-	<!-- <util:properties id="com.adviser" location="classpath:environment.properties" 
-		/> -->
-	<bean class="com.adviser.loadGenerator.PropertyPlaceholderConfigurer">
-	</bean>
+  <context:component-scan base-package="com.adviser" />
+  <bean class="com.adviser.loadGenerator.PropertyPlaceholderConfigurer" />
 
 </beans>
