@@ -6,6 +6,7 @@ import java.util.concurrent.Future
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
+import org.apache.commons.lang3.concurrent.BasicThreadFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -33,7 +34,7 @@ class Simulator {
   }
 
   void run(Har har) {
-    ThreadPoolExecutor threadPool = Executors.newFixedThreadPool(users)
+    ThreadPoolExecutor threadPool = Executors.newFixedThreadPool(users, new BasicThreadFactory.Builder().namingPattern("user-%d").daemon(true).build())
     CountDownLatch cdl = new CountDownLatch(users)
     SimulatorResult result = new SimulatorResult()
     List<Future<List<UserResult>>> list = (0..<users).collect { threadPool.submit(new User(repetitions, baseUrl, har, cdl)) }

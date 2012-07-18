@@ -6,6 +6,7 @@ import java.util.concurrent.Future
 import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
+import org.apache.commons.lang3.concurrent.BasicThreadFactory
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 
@@ -28,7 +29,7 @@ class Browser {
 
   AsyncHttpClient client
 
-  ThreadPoolExecutor threadPool = Executors.newFixedThreadPool(8)
+  ThreadPoolExecutor threadPool
 
   CountDownLatch cdl
 
@@ -42,6 +43,7 @@ class Browser {
         .setMaximumConnectionsTotal(10000)
         .build();
     client = new AsyncHttpClient(new GrizzlyAsyncHttpProvider(config));
+    threadPool = Executors.newFixedThreadPool(8, new BasicThreadFactory.Builder().namingPattern(Thread.currentThread().getName() + "-browser-%d").daemon(true).build())
   }
 
   PageResult request(Page page, List<Entry> entries) {
