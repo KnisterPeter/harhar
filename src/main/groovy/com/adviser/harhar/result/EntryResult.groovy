@@ -2,6 +2,7 @@ package com.adviser.harhar.result
 
 import java.util.concurrent.Future
 
+import com.adviser.harhar.ByteCountingOutputStream
 import com.adviser.harhar.model.Entry
 import com.ning.http.client.Response
 
@@ -20,10 +21,11 @@ class EntryResult {
 
   int statusCode
 
-  long size = -1
+  ByteCountingOutputStream bcos
 
   EntryResult(Entry entry) {
     this.entry = entry
+    this.bcos = new ByteCountingOutputStream()
   }
 
   void calculate() {
@@ -35,5 +37,9 @@ class EntryResult {
 
   long getTime() {
     end - start
+  }
+
+  long getSize() {
+    bcos.bytes
   }
 }

@@ -24,8 +24,6 @@ class HttpCallback implements AsyncHandler<Response> {
 
   EntryResult result
 
-  def bytes = 0
-
   HttpCallback(cdl, result) {
     this.cdl = cdl
     this.result = result
@@ -48,24 +46,13 @@ class HttpCallback implements AsyncHandler<Response> {
   }
 
   STATE onBodyPartReceived(HttpResponseBodyPart bodyPart) {
-    bodyPart.writeTo(new OutputStream() {
-          void write(int b) {
-            bytes++
-          }
-          void write(byte[] b) {
-            bytes += b.length
-          }
-          void write(byte[] b, int off, int len) {
-            bytes += len
-          }
-        })
+    bodyPart.writeTo(result.bcos)
     return STATE.CONTINUE
   }
 
   Response onCompleted() {
     result?.end = System.currentTimeMillis()
     cdl?.countDown()
-    // TODO: Integrate bytes length into response
     responseBuilder.build()
   }
 }
