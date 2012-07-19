@@ -14,6 +14,8 @@ import com.ning.http.client.AsyncHttpClient.BoundRequestBuilder
  */
 class EntryRequestor implements Callable<EntryResult> {
 
+  Logger logger
+
   def baseUrl
 
   def baseUrlSsl
@@ -24,7 +26,8 @@ class EntryRequestor implements Callable<EntryResult> {
 
   AsyncHttpClient client
 
-  EntryRequestor(baseUrl, Entry entry, CountDownLatch cdl, AsyncHttpClient client) {
+  EntryRequestor(logger, baseUrl, Entry entry, CountDownLatch cdl, AsyncHttpClient client) {
+    this.logger = logger
     this.baseUrl = baseUrl
     if (baseUrl) {
       this.baseUrlSsl = baseUrl.replaceFirst("http", "https")
@@ -54,7 +57,7 @@ class EntryRequestor implements Callable<EntryResult> {
           .replaceFirst("http://[^/]+/", baseUrl)
           .replaceFirst("https://[^/]+/", baseUrlSsl)
     }
-    println "Start request: ${url}"
+    logger.debug("Start request: ${url}")
     BoundRequestBuilder request
     switch (entry.request.method.toLowerCase()) {
       case "get":

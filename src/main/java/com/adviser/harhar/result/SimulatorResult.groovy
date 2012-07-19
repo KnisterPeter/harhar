@@ -1,15 +1,23 @@
 package com.adviser.harhar.result
 
+import com.adviser.harhar.Logger
+
 /**
  * @author marwol
  */
 class SimulatorResult {
+
+  Logger logger
 
   List<UserResult> userResults = []
 
   long start = System.currentTimeMillis()
 
   long end
+
+  SimulatorResult(Logger logger) {
+    this.logger = logger
+  }
 
   long getTime() {
     end - start
@@ -62,12 +70,12 @@ class SimulatorResult {
     userResults.collect { it.maxRequestTime }.max()
   }
   void print() {
-    println "Simulator:"
-    println "  time: ${time} ms"
-    println "  requests (total/per s): ${num}/${num / (time / 1000)}"
-    println "  request time (min/avg/max): ${minRequestTime}/${avgRequestTime}/${maxRequestTime} ms"
-    println "  user time (min/avg/max): ${minUserTime}/${avgUserTime}/${maxUserTime} ms"
-    println "  user size: ${userSize} bytes"
-    println "  status: ${statusResults}"
+    logger.info("Simulator:")
+    logger.info("  time: ${time} ms")
+    logger.info("  requests (total/per s): ${num}/${num / (time / 1000)}")
+    logger.info("  request time (min/avg/max): ${minRequestTime}/${avgRequestTime}/${maxRequestTime} ms")
+    logger.info("  user time (min/avg/max): ${minUserTime}/${avgUserTime}/${maxUserTime} ms")
+    logger.info("  user size: ${userSize} bytes")
+    logger.info("  status: ${statusResults}")
   }
 }

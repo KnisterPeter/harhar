@@ -17,6 +17,8 @@ import com.adviser.harhar.result.UserResult
  */
 class Simulator {
 
+  Logger logger
+
   int users
 
   int repetitions
@@ -25,7 +27,8 @@ class Simulator {
 
   def result
 
-  Simulator(int users, int repetitions, def url) {
+  Simulator(logger, int users, int repetitions, def url) {
+    this.logger = logger
     this.users = users
     this.repetitions = repetitions
     this.baseUrl = url
@@ -34,10 +37,10 @@ class Simulator {
   void run(Har har) {
     ThreadPoolExecutor threadPool = Executors.newFixedThreadPool(users, new BasicThreadFactory.Builder().namingPattern("user-%d").daemon(true).build())
     CountDownLatch cdl = new CountDownLatch(users)
-    result = new SimulatorResult()
-    List<Future<List<UserResult>>> list = (0..<users).collect { threadPool.submit(new User(repetitions, baseUrl, har, cdl)) }
+    result = new SimulatorResult(logger)
+    List<Future<List<UserResult>>> list = (0..<users).collect { threadPool.submit(new User(logger, repetitions, baseUrl, har, cdl)) }
     while (cdl.count > 0) {
-      //println "Simulator CDL ${cdl.count}"
+      logger.debug("Simulator CDL ${cdl.count}")
       cdl.await(5, TimeUnit.SECONDS)
     }
     result.setEnd(System.currentTimeMillis())

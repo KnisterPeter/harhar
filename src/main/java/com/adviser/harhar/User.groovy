@@ -11,6 +11,8 @@ import com.adviser.harhar.result.UserResult
  */
 class User implements Callable<List<UserResult>> {
 
+  Logger logger
+
   int repetitions
 
   def baseUrl
@@ -19,7 +21,8 @@ class User implements Callable<List<UserResult>> {
 
   CountDownLatch cdl
 
-  User(repetitions, baseUrl, Har har, CountDownLatch cdl) {
+  User(logger, repetitions, baseUrl, Har har, CountDownLatch cdl) {
+    this.logger = logger
     this.repetitions = repetitions
     this.baseUrl = baseUrl
     this.har = har
@@ -29,7 +32,7 @@ class User implements Callable<List<UserResult>> {
   List<UserResult> call() {
     def list = []
     try {
-      Browser browser = new Browser(baseUrl)
+      Browser browser = new Browser(logger, baseUrl)
       repetitions.times { list << exec(browser) }
       browser.quit()
     } finally {

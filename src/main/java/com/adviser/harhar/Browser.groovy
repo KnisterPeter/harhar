@@ -21,6 +21,8 @@ import com.ning.http.client.providers.grizzly.GrizzlyAsyncHttpProvider
  */
 class Browser {
 
+  Logger logger
+
   def baseUrl
 
   AsyncHttpClient client
@@ -29,7 +31,8 @@ class Browser {
 
   CountDownLatch cdl
 
-  Browser(baseUrl) {
+  Browser(logger, baseUrl) {
+    this.logger = logger
     this.baseUrl = baseUrl
     AsyncHttpClientConfig config = new AsyncHttpClientConfig.Builder()
         .setAllowPoolingConnection(true)
@@ -43,16 +46,16 @@ class Browser {
   }
 
   PageResult request(Page page, List<Entry> entries) {
-    //println "Started page request: ${page.title} (${entries.size()})"
+    logger.debug("Started page request: ${page.title} (${entries.size()})")
     cdl = new CountDownLatch(entries.size())
     PageResult result = new PageResult(page)
-    List<Future<EntryResult>> list = entries.collect { threadPool.submit(new EntryRequestor(baseUrl, it, cdl, client)) }
+    List<Future<EntryResult>> list = entries.collect { threadPool.submit(new EntryRequestor(logger, baseUrl, it, cdl, client)) }
     while (cdl.count > 0) {
-      //println "Browser CDL ${cdl.count} for page ${page.title}"
+      logger.debug("Browser CDL ${cdl.count} for page ${page.title}")
       cdl.await(5, TimeUnit.SECONDS)
     }
     result.setEnd(System.currentTimeMillis())
-    //println "Completed page request: ${page.title}"
+    logger.debug("Completed page request: ${page.title}")
     result.entryResults = list.collect { it.get() }
     result.entryResults.each { it.calculate() }
     return result

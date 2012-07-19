@@ -30,4 +30,9 @@ public @interface Har {
    */
   int repetitions() default 1;
 
+  /**
+   * @return Returns true to enabled debug output. Defaults to false
+   */
+  boolean debug() default false;
+
 }
