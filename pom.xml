@@ -12,6 +12,9 @@
     tool.
   </description>
 
+  <properties>
+    <sonar.language>groovy</sonar.language>
+  </properties>
   <dependencies>
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
