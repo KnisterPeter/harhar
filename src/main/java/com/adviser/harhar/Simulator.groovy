@@ -37,7 +37,7 @@ class Simulator {
     result = new SimulatorResult()
     List<Future<List<UserResult>>> list = (0..<users).collect { threadPool.submit(new User(repetitions, baseUrl, har, cdl)) }
     while (cdl.count > 0) {
-      println "Simulator CDL ${cdl.count}"
+      //println "Simulator CDL ${cdl.count}"
       cdl.await(5, TimeUnit.SECONDS)
     }
     result.setEnd(System.currentTimeMillis())
