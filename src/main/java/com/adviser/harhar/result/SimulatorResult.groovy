@@ -1,7 +1,5 @@
 package com.adviser.harhar.result
 
-
-
 /**
  * @author marwol
  */

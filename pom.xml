@@ -41,12 +41,6 @@
       <artifactId>grizzly-http-client</artifactId>
       <version>1.1</version>
     </dependency>
-    <!-- TODO: This should only be embedded for the cli version (best would be to remove logging) -->
-    <dependency>
-      <groupId>ch.qos.logback</groupId>
-      <artifactId>logback-classic</artifactId>
-      <version>1.0.6</version>
-    </dependency>
     <dependency>
       <groupId>junit</groupId>
       <artifactId>junit</artifactId>

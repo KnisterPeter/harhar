@@ -7,8 +7,6 @@ import java.util.concurrent.ThreadPoolExecutor
 import java.util.concurrent.TimeUnit
 
 import org.apache.commons.lang3.concurrent.BasicThreadFactory
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
 
 import com.adviser.harhar.model.Entry
 import com.adviser.harhar.model.Page
@@ -22,8 +20,6 @@ import com.ning.http.client.providers.grizzly.GrizzlyAsyncHttpProvider
  * @author marwol
  */
 class Browser {
-
-  static final Logger LOGGER = LoggerFactory.getLogger(Browser.class)
 
   def baseUrl
 
@@ -47,16 +43,16 @@ class Browser {
   }
 
   PageResult request(Page page, List<Entry> entries) {
-    LOGGER.info("Started page request: {} ({})", page.title, entries.size())
+    //println "Started page request: ${page.title} (${entries.size()})"
     cdl = new CountDownLatch(entries.size())
     PageResult result = new PageResult(page)
     List<Future<EntryResult>> list = entries.collect { threadPool.submit(new EntryRequestor(baseUrl, it, cdl, client)) }
     while (cdl.count > 0) {
-      LOGGER.debug("Browser CDL {} for page {}", cdl.count, page.title)
+      //println "Browser CDL ${cdl.count} for page ${page.title}"
       cdl.await(5, TimeUnit.SECONDS)
     }
     result.setEnd(System.currentTimeMillis())
-    LOGGER.info("Completed page request: {}", page.title)
+    //println "Completed page request: ${page.title}"
     result.entryResults = list.collect { it.get() }
     result.entryResults.each { it.calculate() }
     return result

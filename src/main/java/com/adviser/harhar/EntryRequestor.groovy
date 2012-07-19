@@ -3,9 +3,6 @@ package com.adviser.harhar
 import java.util.concurrent.Callable
 import java.util.concurrent.CountDownLatch
 
-import org.slf4j.Logger
-import org.slf4j.LoggerFactory
-
 import com.adviser.harhar.model.Entry
 import com.adviser.harhar.result.EntryResult
 import com.ning.http.client.AsyncHttpClient
@@ -16,8 +13,6 @@ import com.ning.http.client.AsyncHttpClient.BoundRequestBuilder
  * @author marwol
  */
 class EntryRequestor implements Callable<EntryResult> {
-
-  Logger LOGGER = LoggerFactory.getLogger(EntryRequestor.class)
 
   def baseUrl
 
@@ -47,7 +42,7 @@ class EntryRequestor implements Callable<EntryResult> {
       return result
     } catch (all) {
       cdl.countDown()
-      LOGGER.error("Failed to execute request: " + entry.getRequest().getUrl(), all)
+      throw all
     }
   }
 
@@ -59,7 +54,7 @@ class EntryRequestor implements Callable<EntryResult> {
           .replaceFirst("http://[^/]+/", baseUrl)
           .replaceFirst("https://[^/]+/", baseUrlSsl)
     }
-    LOGGER.debug("Start request: {}", url)
+    println "Start request: ${url}"
     BoundRequestBuilder request
     switch (entry.request.method.toLowerCase()) {
       case "get":
