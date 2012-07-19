@@ -31,7 +31,6 @@ class EntryResult {
   void calculate() {
     Response r = response.get()
     this.statusCode = r.getStatusCode()
-    this.size = r.getResponseBodyAsBytes().size()
     response = null
   }
 
