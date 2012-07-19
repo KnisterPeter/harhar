@@ -1,18 +1,29 @@
 package com.adviser.harhar.junit
 
+
 import org.junit.runner.Description
 import org.junit.runner.notification.RunNotifier
+import org.junit.runners.ParentRunner
+import org.junit.runners.model.FrameworkMethod
 
-class HarHarRunner extends org.junit.runner.Runner {
+class HarHarRunner extends ParentRunner<FrameworkMethod> {
 
-  HarHarRunner(Class classUnderTest) {
-    super()
+  HarHarRunner(Class klass) {
+    super(klass)
   }
 
-  Description getDescription() {
-    return null
+  List<FrameworkMethod> getChildren() {
+    testClass.getAnnotatedMethods(Har.class)
   }
 
-  void run(RunNotifier notifier) {
+  Description describeChild(FrameworkMethod child) {
+    Description.createTestDescription(getTestClass().getJavaClass(),
+        child.name, child.annotations);
+  }
+
+  void runChild(FrameworkMethod child, RunNotifier notifier) {
+    def resultInvocation = { child.invokeExplosively(testClass.onlyConstructor.newInstance(), it) }
+    def statement = new RunHarStatement(resultInvocation, child.getAnnotation(Har.class))
+    runLeaf(statement, describeChild(child), notifier)
   }
 }
