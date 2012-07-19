@@ -13,7 +13,7 @@
   </description>
 
   <properties>
-    <sonar.language>groovy</sonar.language>
+    <sonar.language>grvy</sonar.language>
   </properties>
   <dependencies>
     <dependency>
