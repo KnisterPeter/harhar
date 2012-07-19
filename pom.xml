@@ -18,7 +18,7 @@
   <dependencies>
     <dependency>
       <groupId>org.codehaus.groovy</groupId>
-      <artifactId>groovy</artifactId>
+      <artifactId>groovy-all</artifactId>
       <version>2.0.0</version>
     </dependency>
     <dependency>
@@ -41,6 +41,7 @@
       <artifactId>grizzly-http-client</artifactId>
       <version>1.1</version>
     </dependency>
+    <!-- TODO: This should only be embedded for the cli version (best would be to remove logging) -->
     <dependency>
       <groupId>ch.qos.logback</groupId>
       <artifactId>logback-classic</artifactId>
