@@ -10,8 +10,10 @@ import com.adviser.harhar.result.SimulatorResult
 @RunWith(HarHarRunner.class)
 class TestRunner {
 
-  @Har(value = "classpath:test.har", users = 10, repetitions = 10)
+  @Har(value = "classpath:image.har", users = 10, repetitions = 10)
   void testHar(final SimulatorResult result) {
-    HarAssert.assertMaxPageTime(result, 1000)
+    result.print();
+    HarAssert.assertAvgPageTime(result, 250);
+    HarAssert.assertMaxPageTime(result, 500)
   }
 }
