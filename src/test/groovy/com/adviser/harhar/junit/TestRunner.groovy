@@ -13,7 +13,7 @@ class TestRunner {
   @Har(value = "classpath:image.har", users = 10, repetitions = 10)
   void testHar(final SimulatorResult result) {
     result.print();
-    HarAssert.assertAvgPageTime(result, 250);
-    HarAssert.assertMaxPageTime(result, 500)
+    HarAssert.assertAvgPageTime(result, 500);
+    HarAssert.assertMaxPageTime(result, 1000)
   }
 }
