@@ -14,6 +14,6 @@ class TestRunner {
   void testHar(final SimulatorResult result) {
     result.print();
     HarAssert.assertAvgPageTime(result, 500);
-    HarAssert.assertMaxPageTime(result, 1000)
+    HarAssert.assertMaxPageTime(result, 5000)
   }
 }
