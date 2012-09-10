@@ -8,7 +8,7 @@
   </parent>
   <groupId>de.matrixweb</groupId>
   <artifactId>harhar</artifactId>
-  <version>0.2.1-SNAPSHOT</version>
+  <version>0.2.1</version>
 
   <name>HarHar</name>
   <description>
@@ -139,8 +139,7 @@
             <configuration>
               <target>
                 <taskdef name="groovydoc" classname="org.codehaus.groovy.ant.Groovydoc" classpathref="maven.compile.classpath" />
-                <groovydoc destdir="${project.reporting.outputDirectory}/groovydoc" sourcepath="${basedir}/src/main/groovy" use="true" windowtitle="${project.name}"
-                  doctitle="${project.name}">
+                <groovydoc destdir="${project.reporting.outputDirectory}/groovydoc" sourcepath="${basedir}/src/main/groovy" use="true" windowtitle="${project.name}" doctitle="${project.name}">
                   <link packages="java.,org.xml.,javax.,org.xml." href="http://download.oracle.com/javase/6/docs/api" />
                   <link packages="org.apache.tools.ant." href="http://evgeny-goldin.org/javadoc/ant/api" />
                   <link packages="org.junit.,junit.framework." href="http://kentbeck.github.com/junit/javadoc/latest" />
