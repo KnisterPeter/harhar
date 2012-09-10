@@ -8,7 +8,7 @@
   </parent>
   <groupId>de.matrixweb</groupId>
   <artifactId>harhar</artifactId>
-  <version>0.3.0-SNAPSHOT</version>
+  <version>0.2.1-SNAPSHOT</version>
 
   <name>HarHar</name>
   <description>
@@ -121,6 +121,59 @@
                   <mainClass>de.matrixweb.harhar.Main</mainClass>
                 </transformer>
               </transformers>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-antrun-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <id>groovydoc</id>
+            <phase>package</phase>
+            <goals>
+              <goal>run</goal>
+            </goals>
+            <configuration>
+              <target>
+                <taskdef name="groovydoc" classname="org.codehaus.groovy.ant.Groovydoc" classpathref="maven.compile.classpath" />
+                <groovydoc destdir="${project.reporting.outputDirectory}/groovydoc" sourcepath="${basedir}/src/main/groovy" use="true" windowtitle="${project.name}"
+                  doctitle="${project.name}">
+                  <link packages="java.,org.xml.,javax.,org.xml." href="http://download.oracle.com/javase/6/docs/api" />
+                  <link packages="org.apache.tools.ant." href="http://evgeny-goldin.org/javadoc/ant/api" />
+                  <link packages="org.junit.,junit.framework." href="http://kentbeck.github.com/junit/javadoc/latest" />
+                  <link packages="groovy.,org.codehaus.groovy." href="http://groovy.codehaus.org/api/" />
+                  <link packages="org.codehaus.gmaven." href="http://evgeny-goldin.org/javadoc/gmaven" />
+                </groovydoc>
+                <jar jarfile="${basedir}/target/${project.build.finalName}-javadoc.jar">
+                  <fileset dir="${project.reporting.outputDirectory}/groovydoc" />
+                </jar>
+              </target>
+            </configuration>
+          </execution>
+        </executions>
+      </plugin>
+      <plugin>
+        <groupId>org.codehaus.mojo</groupId>
+        <artifactId>build-helper-maven-plugin</artifactId>
+        <version>1.7</version>
+        <executions>
+          <execution>
+            <id>attach-artifacts</id>
+            <phase>package</phase>
+            <goals>
+              <goal>attach-artifact</goal>
+            </goals>
+            <configuration>
+              <artifacts>
+                <artifact>
+                  <file>${basedir}/target/${project.build.finalName}-javadoc.jar</file>
+                  <type>jar </type>
+                  <classifier>javadoc</classifier>
+                </artifact>
+              </artifacts>
             </configuration>
           </execution>
         </executions>
